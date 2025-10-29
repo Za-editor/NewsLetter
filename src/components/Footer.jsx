@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 const Footer = () => {
   const policies = [
     "Privacy Policy",
@@ -23,9 +25,11 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-10">
           {/* --- Left column: Logo --- */}
           <div className="flex flex-col items-center md:items-start md:w-1/4">
-            <h1 className="text-3xl font-extrabold text-white uppercase tracking-wide">
-              Newsletter
-            </h1>
+            <Link to={"/"}>
+              <h1 className="text-3xl font-extrabold text-white uppercase tracking-wide">
+                Newsletter
+              </h1>
+            </Link>
           </div>
 
           {/* --- Middle column: Policy links --- */}
@@ -43,8 +47,6 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-
-            {/* Copyright */}
           </div>
 
           {/* --- Right column: Category links --- */}
@@ -79,6 +81,7 @@ const Footer = () => {
 
         {/* Divider for small screens */}
         <div className="mt-8 border-t border-gray-700  flex justify-center items-center">
+          {/* Copyright */}
           <p className="text-xs md:text-sm text-gray-500 pt-10">
             © 2025 Newsletter. All rights reserved
           </p>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { FiSearch, FiSun } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { MdClose } from "react-icons/md";
+import { Link } from "react-router";
 
 const Navbar = () => {
   const [active, setActive] = useState("World");
@@ -9,8 +10,9 @@ const Navbar = () => {
   const [query, setQuery] = useState("");
   const [time, setTime] = useState(new Date());
 
-  // Temporary static sections for UI-only version
+
   const sections = [
+    "All",
     "Politics",
     "World",
     "Economy",
@@ -63,10 +65,12 @@ const Navbar = () => {
           >
             <RxHamburgerMenu size={24} />
           </button>
-
-          <h1 className="text-3xl font-extrabold tracking-wide uppercase">
-            Newsletter
-          </h1>
+          
+          <Link to={"/"}>
+            <h1 className="text-3xl font-extrabold tracking-wide uppercase">
+              Newsletter
+            </h1>
+          </Link>
         </div>
 
         {/* Center: Search (desktop) */}

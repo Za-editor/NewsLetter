@@ -33,7 +33,7 @@ const Hero = () => {
               </p>
             </div>
 
-            <div className="w-full md:w-[120px] h-24 overflow-hidden">
+            <div className="w-full md:w-[120px] h-50 md:h-24 overflow-hidden">
               <img
                 src="https://picsum.photos/seed/picsum/200/300"
                 alt="news thumbnail"

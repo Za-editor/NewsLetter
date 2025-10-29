@@ -14,7 +14,7 @@ const ArticleView = () => {
         />
         <div className="p-6">
           {/* Title */}
-          <h1 className="text-2xl font-semibold text-gray-900 leading-snug mb-3">
+          <h1 className="text-2xl md:text-3xl font-bold  leading-tight mb-3">
             Furor Over Chinese Spy Balloon Leads to a Diplomatic Crisis
           </h1>
 

@@ -6,7 +6,7 @@ import NewsCardtext from "./ui/NewsCardtext";
 const News = () => {
   return (
     <section className="bg-[#f9f8f5]">
-      <section className="container mx-auto">
+      <section className="container mx-auto pb-[25px]">
         <div className="flex w-full flex-col  md:flex-row gap-[25px] px-4 lg:px-0">
           <div className="">
             <div className="flex items-center p-[30px] gap-[25px]">
