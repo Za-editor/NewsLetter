@@ -41,7 +41,7 @@ const Hero = ({news}) => {
           </Link>
         )}
 
-        <div className="py-6">
+        <div className="py-6 shadow-2xl cursor-pointer hover:scale-101 duration-300 ease-in-out">
           {tagNews && (
             <Link to={`/article/${encodeURIComponent(tagNews.id)}`}>
               <div className="flex flex-col md:flex-row gap-4 hover:bg-gray-50 cursor-pointer ease-in-out duration-500 group p-2 rounded-md">
@@ -49,12 +49,15 @@ const Hero = ({news}) => {
                   <h2 className="text-xl md:text-[25px] font-bold mb-1 group-hover:text-[#04594D] duration-300 ease-in-out">
                     {tagNews?.fields.headline}
                   </h2>
-                  <p className="text-sm md:text-[12px] text-[#04594D] max-w-2xl">
+                  <p className="text-sm text-gray-600 flex space-x-3 py-2">
+                    {formatDate(tagNews.webPublicationDate)} • {tagNews.fields.byline}
+                  </p>
+                  <p className="text-sm md:text-[15px] text-[#04594D] max-w-2xl">
                     {tagNews?.fields.trailText}
                   </p>
                 </div>
 
-                <div className="w-full md:w-[120px] h-50 md:h-24 overflow-hidden">
+                <div className="w-full md:w-[130px] h-50 md:h-40 overflow-hidden">
                   <img
                     src={tagNews?.fields.thumbnail}
                     alt={tagNews?.fields.headline}
@@ -98,7 +101,7 @@ const Hero = ({news}) => {
 
         {fourthNews && (
           <Link to={`/article/${encodeURIComponent(fourthNews.id)}`}>
-            <div className="flex flex-col md:flex-row py-6 group cursor-pointer hover:bg-gray-50 p-2 rounded-md">
+            <div className="flex flex-col md:flex-row py-6 my-4 group drop-shadow-xl shadow-xl  p-2 cursor-pointer hover:scale-101 duration-300 ease-in-out ">
               <div className="relative overflow-hidden w-full md:w-[60%] h-[250px] md:h-[250px]">
                 <img
                   src={fourthNews?.fields.thumbnail}
