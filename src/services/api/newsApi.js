@@ -38,7 +38,7 @@ export const getTrendingNews = async () => {
 
 export const fetchArticleDetails = async (decodedId) => {
   const res = await fetch(
-    `https://content.guardianapis.com/${decodedId}?api-key=${API_KEY}&show-fields=show-fields=headline,trailText,body,thumbnail,byline,body`
+    `https://content.guardianapis.com/${decodedId}?api-key=${API_KEY}&show-fields=headline,trailText,body,thumbnail,byline,body`
   );
   if (!res.ok) throw new Error("Network response was not ok");
   const data = await res.json();
