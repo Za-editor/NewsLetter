@@ -1,30 +1,91 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TrendingHeadlines from "./ui/TrendingHeadlines";
 import NewsCardImage from "./ui/NewsCardImage";
 import NewsCardtext from "./ui/NewsCardtext";
+import { useLatestNews, useTrendingNews } from "../hooks/useNews";
 
 const News = () => {
+  const [pageSize, setPageSize] = useState(10);
+  const [mergedNews, setMergedNews] = useState([]);
+
+  const { data: latestNews, isLoading } = useLatestNews(pageSize);
+  const { data: trendingNews } = useTrendingNews(10);
+
+  //  Merge new data into previous results
+  useEffect(() => {
+    if (latestNews?.length) {
+      setMergedNews((prev) => {
+        const prevIds = new Set(prev.map((n) => n.id));
+        const newItems = latestNews.filter((n) => !prevIds.has(n.id));
+        return [...prev, ...newItems];
+      });
+    }
+  }, [latestNews]);
+
+  const evenNews = mergedNews.filter((_, i) => i % 2 === 0);
+  const oddNews = mergedNews.filter((_, i) => i % 2 !== 0);
+
+  if (isLoading && mergedNews.length === 0) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <section className="bg-[#f9f8f5]">
-      <section className="container mx-auto pb-[25px]">
-        <div className="flex w-full flex-col  md:flex-row gap-[25px] px-4 lg:px-0">
-          <div className="">
+      <div className="container mx-auto pb-[25px]">
+        <div className="flex flex-col md:flex-row gap-[25px] px-4 lg:px-0">
+          {/* Left section (Latest News) */}
+          <div>
             <div className="flex items-center p-[30px] gap-[25px]">
               <h2 className="text-[35px] font-semibold text-gray-800 whitespace-nowrap">
                 Latest News
               </h2>
               <div className="flex-1 h-px bg-gray-800 ml-3"></div>
             </div>
-            <div className=" grid grid-cols-1 lg:grid-cols-2 gap-[25px]">
-              <NewsCardImage />
-              <NewsCardtext />
+
+            <div className="flex flex-col gap-[25px]">
+              {evenNews.map((evenItem, index) => {
+                const oddItem = oddNews[index];
+                const isReversed = index % 2 !== 0;
+
+                return (
+                  <div
+                    key={evenItem.id || index}
+                    className={`grid grid-cols-1 lg:grid-cols-2 gap-[25px] ${
+                      isReversed ? "lg:flex-row-reverse" : ""
+                    }`}
+                  >
+                    {!isReversed ? (
+                      <>
+                        <NewsCardImage data={[evenItem]} />
+                        {oddItem && <NewsCardtext data={[oddItem]} />}
+                      </>
+                    ) : (
+                      <>
+                        {oddItem && <NewsCardtext data={[oddItem]} />}
+                        <NewsCardImage data={[evenItem]} />
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="flex justify-center mt-10">
+              <button
+                onClick={() => setPageSize((prev) => prev + 10)}
+                className="bg-black text-white text-sm px-7 py-3 rounded-md hover:bg-gray-700 transition cursor-pointer"
+              >
+                View More
+              </button>
             </div>
           </div>
+
+          {/* Right section (Trending) */}
           <div className="w-full md:w-[60%] lg:w-[30%] mt-5">
-            <TrendingHeadlines />
+            <TrendingHeadlines data={trendingNews} />
           </div>
         </div>
-      </section>
+      </div>
     </section>
   );
 };

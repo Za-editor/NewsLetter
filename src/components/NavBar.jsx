@@ -5,24 +5,25 @@ import { MdClose } from "react-icons/md";
 import { Link } from "react-router";
 
 const Navbar = () => {
-  const [active, setActive] = useState("World");
+  const [active, setActive] = useState("General");
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [time, setTime] = useState(new Date());
 
 
   const sections = [
-    "All",
-    "Politics",
-    "World",
-    "Economy",
-    "Science & Tech",
-    "Business",
-    "Travel",
-    "Climate",
-    "Lifestyle",
-    "Food",
-    "Sports",
+    { title: "General", id: "sections" },
+    { title: "World", id: "world" },
+    { title: "Politics", id: "politics" },
+    { title: "Science", id: "science" },
+    { title: "Business", id: "business" },
+    { title: "Environment", id: "environment" },
+    { title: "Travel", id: "travel" },
+    { title: "Technology", id: "technology" },
+    { title: "Lifestyle", id: "lifeandstyle" },
+    { title: "Food", id: "food" },
+    { title: "Sports", id: "sport" },
+    
   ];
 
   //   Logic to stop scroll when sidemenu is opened
@@ -101,16 +102,16 @@ const Navbar = () => {
         <div className="container mx-auto flex items-center justify-between px-4 md:px-0  py-5 text-sm font-medium">
           <ul className="hidden md:flex flex-wrap gap-4 md:gap-6">
             {sections.map((section) => (
-              <li key={section}>
+              <li key={section.title}>
                 <button
-                  onClick={() => setActive(section)}
+                  onClick={() => setActive(section.title)}
                   className={`pb-1 transition text-[17px] cursor-pointer ${
-                    active === section
+                    active === section.title
                       ? "border-b-2 border-[#0B776B] text-[#0B776B]"
                       : "text-gray-200 hover:text-[#0B776B]"
                   }`}
                 >
-                  {section}
+                  {section.title}
                 </button>
               </li>
             ))}
@@ -183,19 +184,19 @@ const Navbar = () => {
         <nav className="px-4 py-2">
           <ul className="flex flex-col gap-2">
             {sections.map((section) => (
-              <li key={section}>
+              <li key={section.title}>
                 <button
                   onClick={() => {
-                    setActive(section);
+                    setActive(section.title);
                     setMenuOpen(false); // close after selection
                   }}
                   className={`w-full text-left px-3 py-2 rounded-md transition ${
-                    active === section
+                    active === section.title
                       ? "bg-[#0B776B] text-white"
                       : "text-gray-200 hover:bg-white/5"
                   }`}
                 >
-                  {section}
+                  {section.title}
                 </button>
               </li>
             ))}
