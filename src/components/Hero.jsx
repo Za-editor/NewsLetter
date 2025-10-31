@@ -18,7 +18,7 @@ const Hero = ({news}) => {
 
   return (
     <section className="container mx-auto px-4 md:px-0 grid grid-cols-1 lg:grid-cols-2 gap-8">
-      <div className="p-6 space-y-6">
+      <div className="md:p-6 space-y-6">
         {mainNews && (
           <Link to={`/article/${encodeURIComponent(mainNews.id)}`}>
             <div className="relative overflow-hidden group cursor-pointer h-[300px] md:h-[450px]">
@@ -70,12 +70,12 @@ const Hero = ({news}) => {
       <div className="space-y-6">
         {thirdNews && (
           <Link to={`/article/${encodeURIComponent(thirdNews.id)}`}>
-            <div className="flex flex-col md:flex-row gap-4 p-6 bg-[#1A1A1A]">
-              <div className="md:w-[30%] text-white leading-relaxed text-base md:text-lg">
+            <div className="flex flex-col-reverse md:flex-row gap-4 p-6 bg-[#1A1A1A]">
+              <div className="w-full md:w-[30%] text-white leading-relaxed text-base md:text-lg">
                 {thirdNews?.fields.trailText}
               </div>
 
-              <div className="md:w-[70%] relative overflow-hidden group cursor-pointer h-[250px] md:h-[350px]">
+              <div className="w-full md:w-[70%] relative overflow-hidden group cursor-pointer h-[250px] md:h-[350px]">
                 <img
                   src={thirdNews?.fields.thumbnail}
                   alt={thirdNews?.fields.headline}
@@ -87,7 +87,7 @@ const Hero = ({news}) => {
                     {thirdNews?.fields.headline}
                   </h1>
                   <p className="text-sm mt-2 opacity-90">
-                    {formatDate(thirdNews.webPublicationDate)} •
+                    {formatDate(thirdNews.webPublicationDate)} •{" "}
                     {thirdNews.fields.byline}
                   </p>
                 </div>
