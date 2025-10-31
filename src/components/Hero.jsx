@@ -1,18 +1,21 @@
-import { useNewsSection } from "../hooks/useNews";
 
-const Hero = () => {
-  const { data: homeNews, isLoading: loadingHome } = useNewsSection();
 
-  const mainNews = homeNews?.[0];
-  const tagNews = homeNews?.[1];
-  const thirdNews = homeNews?.[2];
-  const fourthNews = homeNews?.[3];
+const Hero = ({news}) => {
+
+
+  const mainNews = news?.[0];
+  const tagNews = news?.[1];
+  const thirdNews = news?.[2];
+  const fourthNews = news?.[3];
+
+ 
+  
 
   const formatDate = (dateString) => {
     return new Date(dateString).toISOString().split("T")[0];
   };
 
-  if (loadingHome) return <p>Loading News</p>;
+
   return (
     <section className="container mx-auto px-4 md:px-0 grid grid-cols-1 lg:grid-cols-2 gap-8">
       <div className="p-6 space-y-6">

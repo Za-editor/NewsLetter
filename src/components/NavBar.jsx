@@ -2,17 +2,17 @@ import { useState, useEffect } from "react";
 import { FiSearch, FiSun } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { MdClose } from "react-icons/md";
-import { Link } from "react-router";
+import { Link, useParams } from "react-router";
 
 const Navbar = () => {
   const [active, setActive] = useState("General");
   const [menuOpen, setMenuOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [time, setTime] = useState(new Date());
-
+  const { sectionId } = useParams();
 
   const sections = [
-    { title: "General", id: "sections" },
+    { title: "General", id: "search" },
     { title: "World", id: "world" },
     { title: "Politics", id: "politics" },
     { title: "Science", id: "science" },
@@ -23,7 +23,6 @@ const Navbar = () => {
     { title: "Lifestyle", id: "lifeandstyle" },
     { title: "Food", id: "food" },
     { title: "Sports", id: "sport" },
-    
   ];
 
   //   Logic to stop scroll when sidemenu is opened
@@ -66,7 +65,7 @@ const Navbar = () => {
           >
             <RxHamburgerMenu size={24} />
           </button>
-          
+
           <Link to={"/"}>
             <h1 className="text-3xl font-extrabold tracking-wide uppercase">
               Newsletter
@@ -101,20 +100,27 @@ const Navbar = () => {
       <nav className="bg-[#1A1A1A] ">
         <div className="container mx-auto flex items-center justify-between px-4 md:px-0  py-5 text-sm font-medium">
           <ul className="hidden md:flex flex-wrap gap-4 md:gap-6">
-            {sections.map((section) => (
-              <li key={section.title}>
-                <button
-                  onClick={() => setActive(section.title)}
-                  className={`pb-1 transition text-[17px] cursor-pointer ${
-                    active === section.title
-                      ? "border-b-2 border-[#0B776B] text-[#0B776B]"
-                      : "text-gray-200 hover:text-[#0B776B]"
-                  }`}
-                >
-                  {section.title}
-                </button>
-              </li>
-            ))}
+            {sections.map((section) => {
+              const isActive =
+                sectionId === section.id ||
+                (sectionId === undefined && section.title === "General");
+
+              return (
+                <li key={section.id}>
+                  <Link to={`/category/${section.id}`}>
+                    <button
+                      className={`pb-1 transition text-[17px] cursor-pointer ${
+                        isActive
+                          ? "border-b-2 border-[#0B776B] text-[#0B776B]"
+                          : "text-gray-200 hover:text-[#0B776B]"
+                      }`}
+                    >
+                      {section.title}
+                    </button>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           {/* Right side info on category row */}
@@ -185,19 +191,21 @@ const Navbar = () => {
           <ul className="flex flex-col gap-2">
             {sections.map((section) => (
               <li key={section.title}>
-                <button
-                  onClick={() => {
-                    setActive(section.title);
-                    setMenuOpen(false); // close after selection
-                  }}
-                  className={`w-full text-left px-3 py-2 rounded-md transition ${
-                    active === section.title
-                      ? "bg-[#0B776B] text-white"
-                      : "text-gray-200 hover:bg-white/5"
-                  }`}
-                >
-                  {section.title}
-                </button>
+                <Link to={`/category/${section.id}`}>
+                  <button
+                    onClick={() => {
+                      setActive(section.title);
+                      setMenuOpen(false); // close after selection
+                    }}
+                    className={`w-full text-left px-3 py-2 rounded-md transition ${
+                      active === section.title
+                        ? "bg-[#0B776B] text-white"
+                        : "text-gray-200 hover:bg-white/5"
+                    }`}
+                  >
+                    {section.title}
+                  </button>
+                </Link>
               </li>
             ))}
           </ul>

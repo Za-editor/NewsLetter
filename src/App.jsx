@@ -3,6 +3,7 @@ import Layout from "./layout/Layout";
 import HomePage from "./pages/HomePage";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ArticleView from "./pages/ArticleView";
+import Category from "./pages/Category";
 
 const queryClient = new QueryClient();
 
@@ -14,7 +15,8 @@ function App() {
           <Routes>
             <Route element={<Layout />}>
               <Route path="/" element={<HomePage />} />
-              <Route path="/article" element={<ArticleView />} />
+              <Route path="/article/:id" element={<ArticleView />} />
+              <Route path="/category/:sectionId" element={<Category />} />
               
             </Route>
           </Routes>

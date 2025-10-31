@@ -1,31 +1,12 @@
-import React, { useEffect, useState } from "react";
 import TrendingHeadlines from "./ui/TrendingHeadlines";
 import NewsCardImage from "./ui/NewsCardImage";
 import NewsCardtext from "./ui/NewsCardtext";
-import { useLatestNews, useTrendingNews } from "../hooks/useNews";
 
-const News = () => {
-  const [pageSize, setPageSize] = useState(10);
-  const [mergedNews, setMergedNews] = useState([]);
+const News = ({ latestNews, trendingNews, pageSize, setPageSize }) => {
+  const evenNews = latestNews.filter((_, i) => i % 2 === 0);
+  const oddNews = latestNews.filter((_, i) => i % 2 !== 0);
 
-  const { data: latestNews, isLoading } = useLatestNews(pageSize);
-  const { data: trendingNews } = useTrendingNews(10);
-
-  //  Merge new data into previous results
-  useEffect(() => {
-    if (latestNews?.length) {
-      setMergedNews((prev) => {
-        const prevIds = new Set(prev.map((n) => n.id));
-        const newItems = latestNews.filter((n) => !prevIds.has(n.id));
-        return [...prev, ...newItems];
-      });
-    }
-  }, [latestNews]);
-
-  const evenNews = mergedNews.filter((_, i) => i % 2 === 0);
-  const oddNews = mergedNews.filter((_, i) => i % 2 !== 0);
-
-  if (isLoading && mergedNews.length === 0) {
+  if (latestNews.length === 0) {
     return <p>Loading...</p>;
   }
 

@@ -1,31 +1,45 @@
 import React from "react";
 import { FaBookmark, FaRegBookmark, FaShareAlt } from "react-icons/fa";
 import TrendingHeadlines from "../components/ui/TrendingHeadlines";
+import { useArticle, useTrendingNews } from "../hooks/useNews";
+import { useParams } from "react-router";
 
 const ArticleView = () => {
+  const { id } = useParams();
+  const decodedId = decodeURIComponent(id);
+  const { data: article, isLoading, error } = useArticle(decodedId);
+  const { data: trendingNews } = useTrendingNews();
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toISOString().split("T")[0];
+  };
+
+  if (isLoading) return <p className="p-8 text-center">Loading article...</p>;
+  if (error) return <p className="p-8 text-center">Failed to load article.</p>;
+
   return (
-    <section className="my-[25px] container mx-auto flex gap-[25px] ">
-      <div className=" w-full shadow-sm">
+    <section className="my-[25px] container mx-auto flex flex-col lg:flex-row gap-[25px] px-4">
+      {/* Main Article */}
+      <div className="w-full lg:w-[70%] shadow-sm">
         {/* Article Image */}
         <img
-          src="https://picsum.photos/900/550?random=1"
+          src={article.fields.thumbnail}
           alt="Article Cover"
-          className="w-full  mb-5"
+          className="w-full mb-5"
         />
         <div className="p-6">
           {/* Title */}
-          <h1 className="text-2xl md:text-3xl font-bold  leading-tight mb-3">
-            Furor Over Chinese Spy Balloon Leads to a Diplomatic Crisis
+          <h1 className="text-2xl md:text-3xl font-bold leading-tight mb-3">
+            {article.fields.headline}
           </h1>
 
           {/* Author Info + Actions */}
-          <div className="flex items-center justify-between text-sm text-gray-500 mb-5 ">
+          <div className="flex items-center justify-between text-sm text-gray-500 mb-5">
             <div className="flex items-center gap-2">
-              <span className="font-medium text-gray-700">By Brian Naylor</span>
-              <span>•</span>
-              <span>Feb 5, 2023</span>
-              <span>•</span>
-              <span>3 min read</span>
+              <p className="text-sm mt-2 opacity-90">
+                {formatDate(article.webPublicationDate)} •{" "}
+                {article.fields.byline}
+              </p>
             </div>
             <div className="flex items-center gap-3 text-gray-600">
               <FaRegBookmark className="cursor-pointer hover:text-black" />
@@ -34,43 +48,16 @@ const ArticleView = () => {
           </div>
 
           {/* Article Body */}
-          <div className="space-y-4 text-[15px] text-gray-700 leading-relaxed">
-            <p>
-              The Pentagon called the object, which has flown from Montana to
-              Kansas, an “intelligence gathering” balloon. Beijing said it was
-              used mainly for weather research and had strayed off course.
-            </p>
-
-            <p>
-              <span className="font-semibold">WASHINGTON —</span> Secretary of
-              State Antony J. Blinken on Friday canceled a weekend trip to
-              Beijing after a Chinese spy balloon was sighted above the Rocky
-              Mountain state of Montana, gaining a frenzy of media coverage and
-              political criticism that threatened to derail the first visit by
-              an American diplomat to China that President Biden had promoted to
-              stabilize U.S.–China relations.
-            </p>
-
-            <p>
-              Mr. Blinken called the Chinese surveillance an “irresponsible act”
-              and a “clear violation of U.S. sovereignty and international law.”
-            </p>
-
-            <p>
-              China’s decision to halt his invitation “does not remove planned
-              visits,” he said, “but at a time certain conditions are met.”
-            </p>
-
-            <p>
-              Mr. Blinken canceled the trip after civilians in Montana this week
-              reported seeing a large white balloon drifting eastward in the
-              sky.
-            </p>
-          </div>
+          <div
+            className="prose max-w-none text-[20px] text-gray-700 leading-relaxed prose-p:mb-4 prose-a:text-blue-600 hover:prose-a:underline"
+            dangerouslySetInnerHTML={{ __html: article.fields.body }}
+          />
         </div>
       </div>
-      <div className="">
-        <TrendingHeadlines />
+
+      {/* Sidebar (Trending Headlines) */}
+      <div className="w-full lg:w-[30%]">
+        <TrendingHeadlines data={trendingNews} />
       </div>
     </section>
   );

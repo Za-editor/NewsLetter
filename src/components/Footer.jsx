@@ -11,13 +11,20 @@ const Footer = () => {
   ];
 
   const sectionsLeft = [
-    "Politics",
-    "World",
-    "Economy",
-    "Science & Tech",
-    "Business",
+    { title: "General", id: "search" },
+    { title: "World", id: "world" },
+    { title: "Politics", id: "politics" },
+    { title: "Science", id: "science" },
+    { title: "Business", id: "business" },
+    { title: "Environment", id: "environment" },
   ];
-  const sectionsRight = ["Travel", "Climate", "Lifestyle", "Food", "Sports"];
+  const sectionsRight = [
+    { title: "Travel", id: "travel" },
+    { title: "Technology", id: "technology" },
+    { title: "Lifestyle", id: "lifeandstyle" },
+    { title: "Food", id: "food" },
+    { title: "Sports", id: "sport" },
+  ];
 
   return (
     <footer className="bg-[#080C0C] text-gray-300 py-10   font-sans">
@@ -52,27 +59,27 @@ const Footer = () => {
           {/* --- Right column: Category links --- */}
           <div className="flex justify-center md:justify-end gap-12 text-sm md:w-1/4">
             <ul className="space-y-2">
-              {sectionsLeft.map((item) => (
-                <li key={item}>
-                  <a
-                    href="#"
+              {sectionsLeft.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    to={`category/${item.id}`}
                     className="hover:text-white transition-colors duration-200 text-[17px] font-bold"
                   >
-                    {item}
-                  </a>
+                    {item.title}
+                  </Link>
                 </li>
               ))}
             </ul>
 
             <ul className="space-y-2">
-              {sectionsRight.map((item) => (
-                <li key={item}>
-                  <a
-                    href="#"
+              {sectionsRight.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    to={`category/${item.id}`}
                     className="hover:text-white transition-colors duration-200 text-[17px] font-bold"
                   >
-                    {item}
-                  </a>
+                    {item.title}
+                  </Link>
                 </li>
               ))}
             </ul>
