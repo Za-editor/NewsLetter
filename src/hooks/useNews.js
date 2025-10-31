@@ -11,7 +11,7 @@ export const useNewsSection = (sectionId) => {
     queryKey: ["sections", sectionId],
     queryFn: () => getAllNewsSection(sectionId),
     staleTime: 1000 * 60 * 10,
-    enabled: !!sectionId,
+    enabled: true,
   });
 };
 
