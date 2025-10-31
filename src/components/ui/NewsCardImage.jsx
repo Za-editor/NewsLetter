@@ -18,7 +18,7 @@ const NewsCardImage = ({ data }) => {
             />
             <div className="absolute inset-0 bg-linear-to-t from-black via-black/30 to-transparent" />
             <div className="absolute bottom-0 left-0 p-6 text-white">
-              <h1 className="text-5 md:text-[25px] font-bold max-w-xl leading-tight">
+              <h1 className="text-5 md:text-[25px] font-bold max-w-xl leading-tight group-hover:text-[#04594D] duration-300 ease-in-out">
                 {item?.fields.headline}
               </h1>
               <p className="text-sm mt-2 opacity-90">

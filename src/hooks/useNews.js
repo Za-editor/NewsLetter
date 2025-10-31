@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import {
   fetchArticleDetails,
   getAllNewsSection,
@@ -10,16 +10,22 @@ export const useNewsSection = (sectionId) => {
   return useQuery({
     queryKey: ["sections", sectionId],
     queryFn: () => getAllNewsSection(sectionId),
-    staleTime: 1000 * 60 * 30,
+    staleTime: 1000 * 60 * 10,
+    enabled: !!sectionId,
   });
 };
 
 export const useLatestNews = (sectionId, pageSize) => {
-  return useQuery({
-    queryKey: ["latest",sectionId, pageSize,],
-    queryFn: () => getLatestNews(sectionId,pageSize),
-    staleTime: 1000 * 60 * 30,
-    keepPreviousData: true,
+  return useInfiniteQuery({
+    queryKey: ["latest", sectionId],
+    queryFn: ({ pageParam = 0 }) =>
+      getLatestNews(sectionId, pageSize, pageParam),
+    getNextPageParam: (lastPage, allPages) => {
+      
+      if (lastPage.length === pageSize) return allPages.length;
+      return undefined;
+    },
+    staleTime: 1000 * 60 * 10,
   });
 };
 
@@ -27,7 +33,7 @@ export const useTrendingNews = () => {
   return useQuery({
     queryKey: ["trending"],
     queryFn: getTrendingNews,
-    staleTime: 1000 * 60 * 30,
+    staleTime: 1000 * 60 * 10,
   });
 };
 
@@ -35,6 +41,6 @@ export const useArticle = (decodedId) => {
   return useQuery({
     queryKey: ["article", decodedId],
     queryFn: () => fetchArticleDetails(decodedId),
-    staleTime: 1000 * 60 * 30,
+    staleTime: 1000 * 60 * 10,
   });
 }

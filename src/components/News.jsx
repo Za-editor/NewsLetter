@@ -2,13 +2,18 @@ import TrendingHeadlines from "./ui/TrendingHeadlines";
 import NewsCardImage from "./ui/NewsCardImage";
 import NewsCardtext from "./ui/NewsCardtext";
 
-const News = ({ latestNews, trendingNews, pageSize, setPageSize }) => {
+
+const News = ({ latestNews, trendingNews,  setPageSize, category, isFetchingNextPage }) => {
+
+
   const evenNews = latestNews.filter((_, i) => i % 2 === 0);
   const oddNews = latestNews.filter((_, i) => i % 2 !== 0);
 
   if (latestNews.length === 0) {
     return <p>Loading...</p>;
   }
+  
+  
 
   return (
     <section className="bg-[#f9f8f5]">
@@ -17,8 +22,8 @@ const News = ({ latestNews, trendingNews, pageSize, setPageSize }) => {
           {/* Left section (Latest News) */}
           <div>
             <div className="flex items-center p-[30px] gap-[25px]">
-              <h2 className="text-[35px] font-semibold text-gray-800 whitespace-nowrap">
-                Latest News
+              <h2 className="text-[35px] font-semibold text-gray-800 whitespace-nowrap capitalize">
+                {category ? category : "Latest News"}
               </h2>
               <div className="flex-1 h-px bg-gray-800 ml-3"></div>
             </div>
@@ -53,10 +58,10 @@ const News = ({ latestNews, trendingNews, pageSize, setPageSize }) => {
 
             <div className="flex justify-center mt-10">
               <button
-                onClick={() => setPageSize((prev) => prev + 10)}
+                onClick={setPageSize}
                 className="bg-black text-white text-sm px-7 py-3 rounded-md hover:bg-gray-700 transition cursor-pointer"
               >
-                View More
+                {isFetchingNextPage ? "Loading..." : "View More"}
               </button>
             </div>
           </div>

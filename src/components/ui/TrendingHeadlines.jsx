@@ -29,7 +29,7 @@ const TrendingHeadlines = ({ data }) => {
       <div className="space-y-6">
         {data.map((item, index) => (
           <Link to={`/article/${encodeURIComponent(item.id)}`} key={index}>
-            <div className="flex gap-4 border-b pb-4 border-gray-200 hover:bg-gray-100 ease-in-out duration-300 cursor-pointer">
+            <div className="flex gap-4 border-b pb-4 border-gray-200 hover:bg-gray-100 ease-in-out duration-300 cursor-pointer group">
               <img
                 src={item.fields?.thumbnail}
                 alt={item.fields?.headline}
@@ -37,10 +37,10 @@ const TrendingHeadlines = ({ data }) => {
               />
               <div className="flex flex-col justify-between">
                 <div>
-                  <h3 className="text-[15px] font-semibold text-gray-900 leading-snug">
+                  <h3 className="text-[15px] font-semibold  leading-snug group-hover:text-[#04594D] duration-300 ease-in-out">
                     {item.fields?.headline}
                   </h3>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-sm text-[#04594D] mt-1">
                     {item.fields?.trailText}
                   </p>
                 </div>

@@ -17,6 +17,9 @@ const ArticleView = () => {
   if (isLoading) return <p className="p-8 text-center">Loading article...</p>;
   if (error) return <p className="p-8 text-center">Failed to load article.</p>;
 
+  console.log(article);
+  
+
   return (
     <section className="my-[25px] container mx-auto flex flex-col lg:flex-row gap-[25px] px-4">
       {/* Main Article */}
@@ -48,10 +51,15 @@ const ArticleView = () => {
           </div>
 
           {/* Article Body */}
-          <div
-            className="prose max-w-none text-[20px] text-gray-700 leading-relaxed prose-p:mb-4 prose-a:text-blue-600 hover:prose-a:underline"
-            dangerouslySetInnerHTML={{ __html: article.fields.body }}
-          />
+          <div className="">
+            <p className="text-[20px] text-[#04594D] mb-5 italic cursor-pointer">
+              {article.fields.trailText}
+            </p>
+            <div
+              className="prose max-w-none text-[20px] text-gray-700 leading-relaxed prose-p:mb-4 prose-a:text-blue-600 hover:prose-a:underline"
+              dangerouslySetInnerHTML={{ __html: article.fields.body }}
+            />
+          </div>
         </div>
       </div>
 
