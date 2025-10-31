@@ -56,7 +56,7 @@ const ArticleView = () => {
               {article.fields.trailText}
             </p>
             <div
-              className="prose max-w-none text-[20px] text-gray-700 leading-relaxed prose-p:mb-4 prose-a:text-blue-600 hover:prose-a:underline"
+              className="prose max-w-none text-[15px] md:text-[20px] text-gray-700 leading-relaxed prose-p:mb-4 prose-a:text-blue-600 hover:prose-a:underline"
               dangerouslySetInnerHTML={{ __html: article.fields.body }}
             />
           </div>

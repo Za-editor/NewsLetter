@@ -6,6 +6,7 @@ const formatDate = (dateString) => {
 };
 
 const stripHtml = (html) => {
+  html.replace(/<[^>]*>/g, "");
   const temp = document.createElement("div");
   temp.innerHTML = html;
   return temp.textContent || temp.innerText || "";
@@ -40,9 +41,12 @@ const NewsCardtext = ({ data }) => {
               {item?.fields.trailText}
             </p>
 
-            <p className="text-[15px] leading-[1.55]  text-gray-600">
-              {getSecondTrail(item.fields.body)}
-            </p>
+            <div
+              className="text-[15px] leading-[1.55] text-gray-600"
+              dangerouslySetInnerHTML={{
+                __html: getSecondTrail(item.fields.body),
+              }}
+            />
           </div>
         </Link>
       ))}
